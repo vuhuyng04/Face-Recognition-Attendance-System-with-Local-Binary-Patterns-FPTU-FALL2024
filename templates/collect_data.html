@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Collect Data</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Màu nền sáng cho trang */
+        }
+        .navbar {
+            background-color: #343a40; /* Màu nền cho navbar */
+        }
+        .navbar-brand,
+        .nav-link {
+            color: #ffffff !important; /* Màu chữ trắng cho navbar */
+        }
+        .navbar-brand:hover,
+        .nav-link:hover {
+            color: #f8f9fa !important; /* Màu chữ khi hover */
+        }
+        h1 {
+            color: #343a40; /* Màu chữ cho tiêu đề */
+        }
+        .form-control, .form-control-file {
+            border-radius: 5px; /* Bo tròn góc cho input */
+        }
+        .btn {
+            background-color: #007bff; /* Màu nền cho button */
+            color: #ffffff; /* Màu chữ cho button */
+            border-radius: 5px; /* Bo tròn góc cho button */
+        }
+        .btn:hover {
+            background-color: #0056b3; /* Màu nền khi hover */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+                <img src="static/logo.png" alt="Logo" style="max-height: 50px; margin-right: 10px;">
+                <span class="h4 mb-0">Face Recognition Attendance</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('collect_data') }}">Collect Data</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('face_recognition') }}">Face Recognition</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('attendance_log') }}">Attendance Log</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <h1 class="text-center">Collect Data</h1>
+        <form method="post" enctype="multipart/form-data" class="mt-4">
+            <div class="form-group">
+                <label for="name">Enter your name:</label>
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="method">Choose data collection method:</label>
+                <select id="method" name="method" class="form-control" required>
+                    <option value="Upload Image">Upload Image</option>
+                    <option value="Use Camera">Use Camera</option>
+                </select>
+            </div>
+            <div id="upload-section" class="form-group" style="display: none;">
+                <label for="files">Upload Images:</label>
+                <input type="file" id="files" name="files" class="form-control-file" multiple>
+            </div>
+            <div id="camera-section" class="form-group" style="display: none;">
+                <label for="duration">Select duration (seconds):</label>
+                <input type="number" id="duration" name="duration" class="form-control" min="5" max="60" value="10">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('method').addEventListener('change', function() {
+            var method = this.value;
+            document.getElementById('upload-section').style.display = method === 'Upload Image' ? 'block' : 'none';
+            document.getElementById('camera-section').style.display = method === 'Use Camera' ? 'block' : 'none';
+        });
+    </script>
+</body>
+</html>
